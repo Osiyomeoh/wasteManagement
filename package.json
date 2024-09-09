@@ -1,0 +1,25 @@
+{
+  "name": "testing",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@matterlabs/zksync-contracts": "^0.6.1",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^4.6.0",
+    "dotenv": "^16.4.5",
+    "hardhat": "^2.22.10",
+    "web3": "^4.12.1",
+    "web3-plugin-zksync": "^1.0.6"
+  },
+  "devDependencies": {
+    "@matterlabs/hardhat-zksync": "^1.1.0",
+    "@matterlabs/hardhat-zksync-solc": "^1.2.4"
+  }
+}
