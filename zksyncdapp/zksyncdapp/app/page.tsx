@@ -9,18 +9,18 @@ export default function Home() {
       <div className=" flex-1 bg-white flex items-center justify-center">
       <button className="bg-black px-24 py-3 rounded-full font-semibold">Connect Wallet</button>
       </div>
-      <div className="flex flex-col items-center justify-center flex-1 p-4">
+      <div className="flex flex-col items-center justify-center flex-1 p-4 ">
 
      
-      <Image src={HeroImage} alt="graphs"/>
-      <div className="flex flex-col items-center w-[80%] mx-auto space-y-4 px-5 text-center">
+      <Image src={HeroImage} alt="graphs" className="w-[80%]"/>
+      {/* <div className="flex flex-col items-center w-[80%] mx-auto space-y-4 px-5 text-center">
 <h1 className="font-semibold text-2xl">Earn Token rewards</h1>
 <p className="text-lg">For every verified waste submission, you earn tokens! These tokens reflect your positive impact and can be accumulated with every eco-friendly action you take.</p>
 
 
-      </div>
+      </div> */}
 
-      {/* <Carousel /> */}
+      <Carousel />
     </div>
     </div>
 
@@ -35,19 +35,19 @@ const Carousel = () => {
   // Array of text content for each slide
   const slides = [
     {
+      title: 'Verified Waste Submission',
+      description:
+        'Help keep the environment clean by submitting your waste through our app. Each submission is verified to ensure proper recycling and waste management.',
+    },
+    {
       title: 'Earn Token Rewards',
       description:
         'For every verified waste submission, you earn tokens! These tokens reflect your positive impact and can be accumulated with every eco-friendly action you take.',
     },
     {
-      title: 'Recycle and Get Rewarded',
+      title: 'Redeem Your Rewards',
       description:
-        'Submit your recycled waste and help make a positive impact on the environment. Earn rewards while contributing to a greener future.',
-    },
-    {
-      title: 'Eco-friendly Initiatives',
-      description:
-        'Join a community of eco-warriors and take part in initiatives that reduce waste and help sustain the environment for future generations.',
+        'Once you’ve gathered enough tokens, you can redeem them for exciting rewards—ranging from eco-friendly products to discounts on sustainable services.',
     },
   ];
 
@@ -62,19 +62,19 @@ const Carousel = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-4 py-6 bg-purple-700 text-white rounded-lg">
+    <div className="flex flex-col items-center justify-center space-y-4 py-6 text-white rounded-lg">
       {/* Text Content */}
-      <div className="text-center">
+      <div className="text-center w-[85%] mx-auto">
         <h2 className="text-2xl font-bold">{slides[currentSlide].title}</h2>
         <p className="mt-2">{slides[currentSlide].description}</p>
       </div>
 
       {/* Pagination Controls */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-12">
         {/* Left Arrow */}
         <button
           onClick={prevSlide}
-          className="text-white bg-gray-500 p-2 rounded-full hover:bg-gray-700"
+          className="text-white  p-2 rounded-full "
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -97,8 +97,8 @@ const Carousel = () => {
           {slides.map((_, index) => (
             <span
               key={index}
-              className={`h-3 w-3 rounded-full ${
-                currentSlide === index ? 'bg-purple-500' : 'bg-purple-300'
+              className={`h-[5px] w-10 rounded-full ${
+                currentSlide === index ? 'bg-[#9E77ED]' : 'bg-[#6941C6]'
               }`}
             />
           ))}
@@ -107,7 +107,7 @@ const Carousel = () => {
         {/* Right Arrow */}
         <button
           onClick={nextSlide}
-          className="text-white bg-gray-500 p-2 rounded-full hover:bg-gray-700"
+          className="text-white  p-2 rounded-full"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
