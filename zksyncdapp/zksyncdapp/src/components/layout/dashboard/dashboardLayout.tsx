@@ -16,7 +16,7 @@ function DashboardLayout({
     <div className="flex">
     
     <Sidebar />
-    <div>
+    <div className="w-full ml-[400px] ">
 
     {children}
 

@@ -10,11 +10,11 @@ import Table from "./first";
 function Dashboard() {
   return (
     <DashboardLayout>
-    <div className="p-8 flex flex-col space-y-5 text-black">
+    <div className=" w-full p-8 flex flex-col space-y-5 text-black">
 
       <h1 className="font-semibold text-black text-2xl">Waste Token</h1>
       <div className="flex space-x-2">
-        <button className="bg-[#774ad8] px-24 py-3 rounded-full font-semibold">Submit waste</button>
+        <button className="bg-[#774ad8] px-24 py-3 rounded-full font-semibold text-white">Submit waste</button>
         <button className="border border-gray-200 px-24 py-3 rounded-full text-gray-700 font-semibold">Redeem Rewards</button>
         
       </div>
