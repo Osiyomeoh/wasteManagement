@@ -1,29 +1,27 @@
 "use client";
 import Image from "next/image";
-import HeroImage from '@/public/images/heroImage.png'
-// import { Button } from "@/src/components/ui/button";
+import HeroImage from '@/public/images/heroImage.png';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function Home() {
   return (
     <div className="w-screen h-screen bg-[#774ad8] flex">
-      <div className=" flex-1 bg-white flex items-center justify-center">
-      <button className="bg-black px-24 py-3 rounded-full font-semibold">Connect Wallet</button>
+      <div className="flex-1 bg-white flex items-center justify-center">
+        {/* Connect Wallet Button using RainbowKit */}
+        <ConnectButton showBalance={false} />
       </div>
       <div className="flex flex-col items-center justify-center flex-1 p-4">
-
-     
-      <Image src={HeroImage} alt="graphs"/>
-      <div className="flex flex-col items-center w-[80%] mx-auto space-y-4 px-5 text-center">
-<h1 className="font-semibold text-2xl">Earn Token rewards</h1>
-<p className="text-lg">For every verified waste submission, you earn tokens! These tokens reflect your positive impact and can be accumulated with every eco-friendly action you take.</p>
-
-
+        <Image src={HeroImage} alt="graphs" />
+        <div className="flex flex-col items-center w-[80%] mx-auto space-y-4 px-5 text-center">
+          <h1 className="font-semibold text-2xl">Earn Token rewards</h1>
+          <p className="text-lg">
+            For every verified waste submission, you earn tokens! These tokens
+            reflect your positive impact and can be accumulated with every
+            eco-friendly action you take.
+          </p>
+        </div>
       </div>
-
-      {/* <Carousel /> */}
     </div>
-    </div>
-
   );
 }
 
@@ -128,5 +126,3 @@ const Carousel = () => {
     </div>
   );
 };
-
-
