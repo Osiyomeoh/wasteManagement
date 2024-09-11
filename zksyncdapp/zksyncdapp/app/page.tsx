@@ -3,12 +3,16 @@ import React, { useState } from 'react';
 import Image from "next/image";
 import HeroImage from '@/public/images/heroImage.png'
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
 
 export default function Home() {
   return (
     <div className="w-screen h-screen bg-[#774ad8] flex">
       <div className=" flex-1 bg-white flex items-center justify-center">
       <button className="bg-black px-24 py-3 rounded-full font-semibold">Connect Wallet</button>
+      <Link href={'/dashboard'}>
+        <button className="bg-black px-24 py-3 rounded-full font-semibold">Go to Dashboard</button>
+        </Link>
       </div>
       <div className="flex flex-col items-center justify-center flex-1 p-4 ">
 
