@@ -1,10 +1,11 @@
 import React from "react";
-import Dashboard from "@/src/Screens/dashboard/Dashboard";
 
+import SubmitWaste from "@/src/Screens/dashboard/SubmitWaste";
 function Layout() {
   return (
     <>
-      <Dashboard  />
+      <SubmitWaste  />
+      
     </>
   );
 }
