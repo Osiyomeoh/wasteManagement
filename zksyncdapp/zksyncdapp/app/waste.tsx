@@ -1,16 +1,37 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useAccount, useSigner } from "wagmi";
+import { useAccount, useWalletClient } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Web3 from "web3";
-import { ZKsyncPlugin, Web3ZKsyncL2, ZKsyncWallet } from "web3-plugin-zksync";
-import wasteTokenAbi from "./abis/WasteToken.json";
-import wasteContractAbi from "./abis/WasteContract.json";
-import paymasterAbi from "./abis/Paymaster.json";
+import { ZKsyncPlugin, Web3ZKsyncL2, types } from "web3-plugin-zksync";
+
+// Import ABIs and parse ABI from JSON files
+import fs from 'fs';
+import path from 'path';
+
+
+// Define the Transaction type
+interface Transaction {
+    type: string;
+    weight?: number;
+    tokens?: number;
+    date: string;
+  }
+
+// Properly parse the ABI files
+const wasteTokenArtifactPath = path.resolve(__dirname, './abis/WasteToken.json');
+const wasteTokenAbi = JSON.parse(fs.readFileSync(wasteTokenArtifactPath).toString()).abi;
+
+const wasteContractArtifactPath = path.resolve(__dirname, './abis/WasteToken/WasteCollectionRewards.json');
+const wasteContractAbi = JSON.parse(fs.readFileSync(wasteContractArtifactPath).toString()).abi;
+
+const paymasterArtifactPath = path.resolve(__dirname, './abis/Paymaster.json');
+const paymasterAbi = JSON.parse(fs.readFileSync(paymasterArtifactPath).toString()).abi;
+
 
 // zkSync provider initialization
-const zkSyncProvider = Web3ZKsyncL2.initWithDefaultProvider(Web3ZKsyncL2.Network.Sepolia);
+const zkSyncProvider = Web3ZKsyncL2.initWithDefaultProvider(types.Network.Sepolia);
 const web3 = new Web3();
 web3.registerPlugin(new ZKsyncPlugin(zkSyncProvider));
 
@@ -20,52 +41,70 @@ const wasteContractAddress = process.env.NEXT_PUBLIC_WASTE_CONTRACT_ADDRESS || "
 const paymasterAddress = process.env.NEXT_PUBLIC_PAYMASTER_ADDRESS || "0xYourPaymasterAddress";
 
 export default function WasteContractInteraction() {
-  const { address, isConnected } = useAccount(); // Get wallet connection status
-  const { data: signer } = useSigner(); // Get the wallet signer
+  const { address, isConnected } = useAccount(); 
+  const { data: walletClient } = useWalletClient(); 
   const [balance, setBalance] = useState<number | null>(null);
   const [wasteSubmissionLoading, setWasteSubmissionLoading] = useState(false);
   const [redeemRewardLoading, setRedeemRewardLoading] = useState(false);
-  const [transactionHistory, setTransactionHistory] = useState([]); // Store user transactions
+  const [transactionHistory, setTransactionHistory] = useState<Transaction[]>([]);
 
-  // Initialize zkSync Wallet with the signer
-  const zkSyncWallet = signer ? new ZKsyncWallet(signer) : null;
+  const zksync = web3.ZKsync;
 
-  // Initialize contracts using zksync plugin
-  const wasteTokenContract = new web3.ZKsync.Contract(wasteTokenAddress, wasteTokenAbi, zkSyncWallet);
-  const wasteContract = new web3.ZKsync.Contract(wasteContractAddress, wasteContractAbi, zkSyncWallet);
-  const paymasterContract = new web3.ZKsync.Contract(paymasterAddress, paymasterAbi, zkSyncWallet);
+  // Load and validate private key
+  const PRIVATE_KEY = process.env.PRIVATE_KEY;
+  if (!PRIVATE_KEY) {
+    throw new Error('Private key is required in the .env file');
+  }
+
+  // Initialize zkSync wallet with the private key
+  const wallet = new zksync.Wallet("0xcd1e3ad2e67471d576b5fdca01b715a1f2149d41516e3524fc51589aa44cb9a7");
+
+  // Initialize WasteToken, Paymaster, and WasteContract instances using zksync plugin
+  const wasteTokenContract = new web3.eth.Contract(wasteTokenAbi, wasteTokenAddress);
+  const wasteContract = new web3.eth.Contract(wasteContractAbi, wasteContractAddress);
+  const paymasterContract = new web3.eth.Contract(paymasterAbi,paymasterAddress);
 
   // Fetch Waste Token balance
-  const fetchBalance = async () => {
-    if (!zkSyncWallet || !address) return;
-
+  // Fetch Waste Token balance
+const fetchBalance = async () => {
+    if (!walletClient?.account?.address) return;
+  
     try {
-      const balance = await wasteTokenContract.methods.balanceOf(address).call();
-      setBalance(Number(Web3.utils.fromWei(balance, "ether")));
-    } catch (error) {
+      const balanceResult = await wasteTokenContract.methods.balanceOf(walletClient.account.address).call();
+  
+      // Check if balanceResult is a valid string and not an array or unexpected type
+    if (balanceResult && typeof balanceResult === 'string') {
+        const balance = web3.utils.fromWei(balanceResult, "ether"); // Convert from Wei to Ether
+        setBalance(Number(balance)); // Set the balance as a number
+      } else {
+        console.error("Balance fetch returned an invalid value:", balanceResult);
+        setBalance(0); // Default to 0 in case of invalid response
+      }
+        console.error("Balance fetch returned an invalid value:", balanceResult);
+        setBalance(0); // Default to 0 in case of invalid response
+      }
+    catch (error) {
       console.error("Error fetching token balance:", error);
+      setBalance(0); // Handle error case, default to 0
     }
   };
+  
 
-  // Waste Submission
   const submitWaste = async (weightInKg: number) => {
-    if (!zkSyncWallet || !address) return;
+    if (!walletClient?.account?.address) return;
 
     setWasteSubmissionLoading(true);
 
     try {
       // Encode the transaction data for waste submission
-      const txData = wasteContract.methods.submitWaste(address, weightInKg).encodeABI();
+      const txData = wasteContract.methods.submitWaste(walletClient.account.address, weightInKg).encodeABI();
 
-      // Estimate gas and submit the transaction
-      const gasLimit = await web3.ZKsync.estimateGas({
-        from: address,
+      // Prepare zkSync transaction with paymaster
+      const tx = await wallet.sendTransaction({
+        from: walletClient.account.address,
         to: wasteContractAddress,
         data: txData,
       });
-
-      // Use paymaster to cover fees
-      await paymasterContract.methods.addDeposit(address, gasLimit).send({ from: address });
 
       console.log(`Waste submitted successfully! ${weightInKg}kg`);
 
@@ -90,7 +129,7 @@ export default function WasteContractInteraction() {
 
   // Redeem Tokens
   const redeemTokens = async (tokensToRedeem: number) => {
-    if (!zkSyncWallet || !address) return;
+    if (!walletClient?.account?.address) return;
 
     setRedeemRewardLoading(true);
 
@@ -98,15 +137,17 @@ export default function WasteContractInteraction() {
       // Encode the transaction data for token redemption
       const txData = wasteContract.methods.redeemTokens(tokensToRedeem).encodeABI();
 
-      // Estimate gas and redeem the tokens
-      const gasLimit = await web3.ZKsync.estimateGas({
-        from: address,
+      // Estimate gas and sign the transaction using zkSync paymaster
+      const gasLimit = await wallet.sendTransaction({
+        from: walletClient.account.address,
         to: wasteContractAddress,
         data: txData,
       });
 
       // Use paymaster to cover fees for redemption
-      await paymasterContract.methods.addDeposit(address, gasLimit).send({ from: address });
+      const paymasterTx = await paymasterContract.methods.addDeposit(walletClient.account.address, gasLimit).send({
+        from: walletClient.account.address,
+      });
 
       console.log(`Successfully redeemed ${tokensToRedeem} WasteTokens`);
 
@@ -134,7 +175,7 @@ export default function WasteContractInteraction() {
     if (isConnected) {
       fetchBalance();
     }
-  }, [isConnected, signer]);
+  }, [isConnected, walletClient]);
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full bg-purple-700 text-white">

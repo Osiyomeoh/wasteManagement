@@ -20,6 +20,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "dotenv": "^16.4.5",
     "encoding": "^0.1.13",
     "ethers": "^6.13.2",
     "iconsax-react": "^0.0.8",
@@ -30,7 +31,8 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "viem": "^2.21.4",
-    "wagmi": "^2.12.9"
+    "wagmi": "^2.12.9",
+    "zksync-ethers": "^6.12.1"
   },
   "devDependencies": {
     "@tanstack/react-table": "^8.20.5",
