@@ -2,6 +2,114 @@
   "version": "3.4",
   "log": [
     {
+      "contracts/DataStorage.sol:DataStorage": {
+        "src": "contracts/DataStorage.sol:4",
+        "version": {
+          "withMetadata": "4f794a397ba2b38c8e85beb9e19c83911d7027dbee1dcf7b4649aa0ae4d92afc",
+          "withoutMetadata": "4f794a397ba2b38c8e85beb9e19c83911d7027dbee1dcf7b4649aa0ae4d92afc",
+          "linkedWithoutMetadata": "4f794a397ba2b38c8e85beb9e19c83911d7027dbee1dcf7b4649aa0ae4d92afc"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "()",
+          "storeData(string)",
+          "updateData(string)",
+          "grantAccess(address)",
+          "revokeAccess(address)",
+          "transferDataOwnership(address)",
+          "getData(address)",
+          "hasAccess(address,address)",
+          "transferContractOwnership(address)",
+          "getContractOwner()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "DataStorage",
+            "src": "contracts/DataStorage.sol:39"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "records",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_address,t_struct(DataRecord)6_storage)",
+              "contract": "DataStorage",
+              "src": "contracts/DataStorage.sol:12"
+            },
+            {
+              "label": "accessControl",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+              "contract": "DataStorage",
+              "src": "contracts/DataStorage.sol:15"
+            },
+            {
+              "label": "contractOwner",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_address",
+              "contract": "DataStorage",
+              "src": "contracts/DataStorage.sol:18"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+              "label": "mapping(address => mapping(address => bool))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_struct(DataRecord)6_storage)": {
+              "label": "mapping(address => struct DataStorage.DataRecord)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(DataRecord)6_storage": {
+              "label": "struct DataStorage.DataRecord",
+              "members": [
+                {
+                  "label": "dataHash",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "owner",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "1"
+                }
+              ],
+              "numberOfBytes": "64"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.20"
+      }
+    },
+    {
       "@matterlabs/zksync-contracts/l2/system-contracts/BootloaderUtilities.sol:BootloaderUtilities": {
         "src": "@matterlabs/zksync-contracts/l2/system-contracts/BootloaderUtilities.sol:15",
         "version": {

@@ -2619,6 +2619,65 @@
       "artifacts": [
         "IERC20Permit"
       ]
+    },
+    "/Users/MAC/Downloads/testing/contracts/DataStorage.sol": {
+      "lastModificationDate": 1725962853430,
+      "contentHash": "aefba77712aa288f76edc9b7815f2cb1",
+      "sourceName": "contracts/DataStorage.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "mode": "3",
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "detectMissingLibraries": false,
+          "forceEVMLA": false,
+          "enableEraVMExtensions": false,
+          "libraries": {}
+        },
+        "eraVersion": "1.0.1",
+        "zksolc": {
+          "version": "1.5.3",
+          "compilerSource": "binary",
+          "settings": {
+            "optimizer": {
+              "enabled": true,
+              "mode": "3",
+              "runs": 200
+            },
+            "compilerPath": "/Users/MAC/Library/Caches/hardhat-nodejs/compilers-v2/zksolc/zksolc-v1.5.3",
+            "missingLibrariesPath": "./.zksolc-libraries-cache/missingLibraryDependencies.json",
+            "areLibrariesMissing": false,
+            "experimental": {},
+            "libraries": {},
+            "enableEraVMExtensions": false,
+            "forceEVMLA": false
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "DataStorage"
+      ]
     }
   }
 }

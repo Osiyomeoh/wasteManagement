@@ -21,7 +21,7 @@ const contractBytecode = JSON.parse(
 
 async function main() {
   // Initialize Web3 with zkSync Plugin for Layer 2
-  const web3 = new Web3(process.env.SEPOLIA_RPC_URL || "https://rpc2.sepolia.org");
+  const web3 = new Web3(process.env.SEPOLIA_RPC_URL || "https://sepolia.era.zksync.dev");
   web3.registerPlugin(
     new ZKsyncPlugin(Web3ZKsyncL2.initWithDefaultProvider(types.Network.Sepolia)),
   );

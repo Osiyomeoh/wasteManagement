@@ -51,74 +51,79 @@ const mintAmount = web3.utils.toWei('100', 'ether'); // 100 WasteToken (you can 
 
 console.log(`Minting ${web3.utils.fromWei(mintAmount, 'ether')} WasteTokens to the Paymaster at ${paymasterAddress}...`);
 console.log(wallet.address, "adreess");
-try {
-  // Create the transaction data for minting tokens
-      // Create the transaction data for minting tokens
-      const txData = wasteTokenContract.methods.mint(paymasterAddress, mintAmount).encodeABI();
+// try {
+//   // Create the transaction data for minting tokens
+//       // Create the transaction data for minting tokens
+//       const txData = wasteTokenContract.methods.mint(paymasterAddress, mintAmount).encodeABI();
 
-      // Get current gas price and define gas parameters for EIP-1559
-      const gasLimit = await web3.eth.estimateGas({
-        from: wallet.address,
-        to: wasteTokenAddress,
-        data: txData,
-      });
-      const gasPrice = await web3.eth.getGasPrice();
+//       // Get current gas price and define gas parameters for EIP-1559
+//       const gasLimit = await web3.eth.estimateGas({
+//         from: wallet.address,
+//         to: wasteTokenAddress,
+//         data: txData,
+//       });
+//       const gasPrice = await web3.eth.getGasPrice();
       
-      const maxPriorityFeePerGas = web3.utils.toWei('2', 'gwei');  
-      const maxFeePerGas = web3.utils.toWei('50', 'gwei');         
+//       const maxPriorityFeePerGas = web3.utils.toWei('2', 'gwei');  
+//       const maxFeePerGas = web3.utils.toWei('50', 'gwei');         
   
-      // Sign and send the transaction
-      const signedTx = await web3.eth.accounts.signTransaction(
-        {
-          to: wasteTokenAddress,
-          data: txData,
-          gas: gasLimit,
-          maxPriorityFeePerGas: maxPriorityFeePerGas,
-          maxFeePerGas: maxFeePerGas,
-          from: wallet.address,
-        },
-        "0xcd1e3ad2e67471d576b5fdca01b715a1f2149d41516e3524fc51589aa44cb9a7"
-      );
+//       // Sign and send the transaction
+//       const signedTx = await web3.eth.accounts.signTransaction(
+//         {
+//           to: wasteTokenAddress,
+//           data: txData,
+//           gas: gasLimit,
+//           maxPriorityFeePerGas: maxPriorityFeePerGas,
+//           maxFeePerGas: maxFeePerGas,
+//           from: wallet.address,
+//         },
+//         "0xcd1e3ad2e67471d576b5fdca01b715a1f2149d41516e3524fc51589aa44cb9a7"
+//       );
   
-      // Send the signed transaction
-      const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+//       // Send the signed transaction
+//       const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
   
-      console.log(`✅ Minting successful! Transaction hash: ${receipt.transactionHash}`);
-    } catch (error) {
-      console.error(`❌ Error minting tokens: ${error.message}`);
-    }
-  }
+//       console.log(`✅ Minting successful! Transaction hash: ${receipt.transactionHash}`);
+//     } catch (error) {
+//       console.error(`❌ Error minting tokens: ${error.message}`);
+//     }
+//   }
 
-//   console.log(`Minting ${web3.utils.fromWei(mintAmount, 'ether')} WasteTokens to the Paymaster at ${paymasterAddress}...`);
-//   const balance_sender_eth_before = await wallet.getBalance();
-//   console.log(balance_sender_eth_before, "Sender ETH before");
-//    // Supplying paymaster with ETH
-//    console.log("Funding paymaster with ETH...");
+  console.log(`Minting ${web3.utils.fromWei(mintAmount, 'ether')} WasteTokens to the Paymaster at ${paymasterAddress}...`);
+  const balance_sender_eth_before = await wallet.getBalance();
+  console.log(balance_sender_eth_before, "Sender ETH before");
+   // Supplying paymaster with ETH
+   console.log("Funding paymaster with ETH...");
   
-//    const tx = 
-//      await wallet.transfer({
-//        to: paymasterAddress,
-//        value: ethers.parseEther("0.06"),
-//      })
-//      const result = await tx.wait();
-//      console.log("transaction", result.transactionHash);
-//      const balance_sender_eth_after = await wallet.getBalance();
+   const tx = 
+     await wallet.transfer({
+       to: paymasterAddress,
+       value: ethers.parseEther("6"),
+     })
+     const result = await tx.wait();
+     console.log("transaction", result.transactionHash);
+     const balance_sender_eth_after = await wallet.getBalance();
+     const paymasterBalanceWei = await web3.eth.getBalance(paymasterAddress);
+     const paymasterBalanceEth = web3.utils.fromWei(paymasterBalanceWei, 'ether');
+     console.log(`Paymaster ETH balance: ${parseFloat(paymasterBalanceEth).toFixed(4)} ETH`);
 
-//      console.log(balance_sender_eth_after, "Sender ETH after(equal)");
 
-//   try {
+     console.log(balance_sender_eth_after, "Sender ETH after(equal)");
+     //console.log(`Paymaster ETH balance: ${parseFloat(paymasterBalance).toFixed(4)} ETH`);
+
+ try {
 //     // Ensure the transaction is signed by the zkSync wallet
 //     const tx = await contractFactory.methods.mint(paymasterAddress, mintAmount).send({
 //       from: wallet.address,    // Use the wallet's address to mint
 //       gas: 1000000,            // Set a gas limit, adjust if necessary
 //     });
 
-//     console.log(`✅ Minting successful! Transaction hash: ${tx.transactionHash}`);
-//     console.log(`Paymaster contract has been minted ${web3.utils.fromWei(mintAmount, 'ether')} WasteTokens`);
-//   } catch (error) {
-//     console.error(`❌ Error minting tokens: ${error.message}`);
-//   }
-// }
+    console.log(`✅ Minting successful! Transaction hash: ${tx.transactionHash}`);
+    console.log(`Paymaster contract has been minted ${web3.utils.fromWei(mintAmount, 'ether')} WasteTokens`);
+  } catch (error) {
+    console.error(`❌ Error minting tokens: ${error.message}`);
+  }
+}
 
 main()
   .then(() => console.log('✅ Script executed successfully'))
