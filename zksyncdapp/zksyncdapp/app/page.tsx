@@ -7,17 +7,18 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 export default function Home() {
   return (
     <div className="w-screen h-screen bg-[#774ad8] flex">
-      <div className=" flex-1 bg-white flex items-center justify-center">
+     <div className=" flex-1 bg-white flex items-center justify-center">
       <button className="bg-black px-24 py-3 rounded-full font-semibold">Connect Wallet</button>
       </div>
       <div className="flex flex-col items-center justify-center flex-1 p-4 ">
 
-     
+      
       <Image src={HeroImage} alt="graphs" className="w-[80%]"/>
 
       <Carousel />
     </div>
     </div>
+    
 
   );
 }
