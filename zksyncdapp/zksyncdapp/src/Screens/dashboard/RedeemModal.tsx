@@ -1,7 +1,6 @@
 import React from 'react'
 import { CustomModal } from './CustomModal'
 import { Button } from '@/src/components/ui/button'
-import { Checkbox } from '@/src/components/ui/checkbox'
 import Image from 'next/image'
 
 import ModalImage from '@/public/images/Modal.png'
@@ -30,18 +29,9 @@ function RedeemModal({ isOpen, onClose,  }: TProps) {
         <h1 className='text-2xl font-bold text-black'>Reward Name</h1>
         <p className='mt-2 text-sm font-light'>
           Text describing   the reward showing TOKENS required
-          {/* <span className='font-bold'>“Daniel Anozie”</span>? */}
+          
         </p>
         <div className='between mt-2.5'>
-          {/* <div className='flex items-center space-x-2'>
-            <Checkbox id='terms' />
-            <label
-              htmlFor='terms'
-              className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-            >
-              Don’t show again
-            </label>
-          </div> */}
           
           <div className='mt-2 flex items-center justify-end gap-3'>
             <Button className='w-full rounded-full' variant={'outline'} onClick={onClose}>

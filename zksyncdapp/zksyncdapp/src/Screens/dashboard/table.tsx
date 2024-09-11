@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-// import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -17,12 +16,6 @@ import {
 
 import { Button } from "@/src/components/ui/button";
 import { Checkbox } from "@/src/components/ui/checkbox";
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuTrigger,
-// } from "@/src/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -31,9 +24,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/src/components/ui/table";
-// import Image from "next/image";
-// import { filePdf, getMB } from "@/src/lib/types/constant";
-// import { Edit2, Eye, Trash } from "iconsax-react";
 
 const data: Transaction[] = [
     {
@@ -144,10 +134,8 @@ export const columns: ColumnDef<Transaction>[] = [
     header: () => <div className="text-left">Tokens earned</div>,
     cell: ({ row }) => (
         <div className="capitalize flex items-center gap-3">
-          {/* <Image src={filePdf} alt="file" width={30} height={30} /> */}
           <div className="">
             <p className="text-sm  ">{row.original.tokensEarned}</p>
-            {/* <p className="text-xs  /90">{getMB(row.original)} MB</p> */}
           </div>
         </div>
       ),
@@ -162,7 +150,6 @@ export const columns: ColumnDef<Transaction>[] = [
           className="pl-0 font-normal text-sm"
         >
           Date
-          {/* <CaretSortIcon className="ml-2 h-4 w-4" /> */}
         </Button>
       );
     },
@@ -184,37 +171,6 @@ export const columns: ColumnDef<Transaction>[] = [
     ),
   },
   
-
-  // {
-  //   id: "actions",
-  //   enableHiding: false,
-  //   cell: ({ row }) => {
-  //     const payment = row.original;
-
-  //     return (
-  //       <DropdownMenu>
-  //         <DropdownMenuTrigger asChild>
-  //           <Button variant="ghost" className="h-8 w-8 p-0">
-  //             <span className="sr-only">Open menu</span>
-  //             <DotsHorizontalIcon className="h-4 w-4" />
-  //           </Button>
-  //         </DropdownMenuTrigger>
-  //         <DropdownMenuContent align="end">
-  //           <DropdownMenuItem className="flex items-center gap-3">
-  //             <Edit2 size={18} color={"#000"} /> <p className="text-sm">Edit</p>
-  //           </DropdownMenuItem>
-  //           <DropdownMenuItem className="flex items-center gap-3">
-  //             <Trash size={18} color={"#000"} />{" "}
-  //             <p className="text-sm">Delete</p>
-  //           </DropdownMenuItem>
-  //           <DropdownMenuItem className="flex items-center gap-3">
-  //             <Eye size={18} /> <p className="text-sm">View details</p>
-  //           </DropdownMenuItem>
-  //         </DropdownMenuContent>
-  //       </DropdownMenu>
-  //     );
-  //   },
-  // },
 ];
 
 export function DataTableDemo() {

@@ -1,10 +1,11 @@
 import React from "react";
 
-import RedeemReward from "@/src/Screens/dashboard/RedeemReward";
+import SubmitWaste from "@/src/Screens/dashboard/SubmitWaste";
 function Layout() {
   return (
     <>
-      <RedeemReward  />
+      <SubmitWaste  />
+      
     </>
   );
 }

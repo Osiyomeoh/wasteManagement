@@ -1,11 +1,6 @@
-
-// import Nav from "../components/reuseables/Nav";
 import Image from "next/image";
-// import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import React from "react";
-// import { logo2 } from "../lib/types/constant";
 import DashboardLayout from "@/src/components/layout/dashboard/dashboardLayout"
-// import { Button } from "@/src/components/ui/button";
 import Table from "./first";
 
 import ChartImage from "@/public/images/Chart_mini.svg"
@@ -20,7 +15,8 @@ import {
 } from "@/src/components/ui/card"
 
 import { ArrowUpIcon } from "@radix-ui/react-icons";
-// import Example from "./Chart";
+import Link from "next/link";
+
 
 function CardWithForm() {
   return (
@@ -28,7 +24,6 @@ function CardWithForm() {
       <CardHeader>
         <CardTitle>
           <h3 className="text-xs">Total Waste Submitted</h3></CardTitle>
-        {/* <CardDescription>Deploy your new project in one-click.</CardDescription> */}
       </CardHeader>
       <CardContent  className="flex justify-between">
      <div>
@@ -60,7 +55,9 @@ function Dashboard() {
         <CardWithForm />
       </div>
       <div className="flex space-x-2">
+        <Link href={"/dashboard"}>
         <button className="bg-[#774ad8] px-24 py-3 rounded-full font-semibold text-white">Submit waste</button>
+        </Link>
         <button className="border border-gray-200 px-24 py-3 rounded-full text-gray-700 font-semibold">Redeem Rewards</button>
         
       </div>

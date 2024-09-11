@@ -1,10 +1,5 @@
-
-// import Nav from "../components/reuseables/Nav";
-// import Image from "next/image";
 import React from "react";
-// import { logo2 } from "../lib/types/constant";
 import DashboardLayout from "@/src/components/layout/dashboard/dashboardLayout"
-// import { Button } from "@/src/components/ui/button";
 import Table from "./rewardTable";
 
 

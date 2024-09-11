@@ -12,7 +12,6 @@ import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFiltered
 import { Button } from "@/src/components/ui/button";
 import { MoveDownIcon } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
-// import { DataTableDemo2 } from "./table";
 
 import CmdR from "@/public/images/cmdR.png"
 import Circooles from "@/public/images/Circooles.png"
@@ -21,7 +20,6 @@ import RedeemModal from "./RedeemModal";
 
 function  RewardTable() {
   return <div className="w-full">
-  {/* <h1 className="py-2 text-lg font-semibold mb-2">Transaction history</h1> */}
   <div className="border border-neutral-300 rounded-lg w-full mt-4 py-3">
   <h1 className="px-6 pb-3 text-2xl font-semibold">Customers</h1>
   <p className="px-6 border-b pb-4 text-gray-600">These companies have purchased in the last 12 months.</p>
@@ -89,71 +87,6 @@ const data: Reward[] = [
     RedeemReward: Date;
   };
 
-
-// export const columns: ColumnDef<Reward>[] = [
-  
-//   {
-//     accessorKey: "rewardName",
-//     header: () => <div className="flex items-center font-semibold">Reward Name <MoveDownIcon className="ml-2 h-4 w-4" /></div>,
-//     cell: ({ row }) => (
-//       <div className="capitalize flex items-center gap-3">
-//         <div className="flex space-x-2 items-center">
-//             <Image src={row.original.image} alt="image" />
-//             <div>
-//                 <p className="text-sm font-semibold ">{row.getValue("rewardName")}</p>
-//                 <p className="text-gray-500">{row.original.rewardLink}</p>
-//             </div>
-          
-//         </div>
-//       </div>
-//     ),
-//   },
- 
-//   {
-//     accessorKey: "tokensRequired",
-//     header: () => <div className="text-left font-semibold">Tokens Required</div>,
-//     cell: ({ row }) => (
-//         <div className="capitalize flex items-center gap-3">
-//           {/* <Image src={filePdf} alt="file" width={30} height={30} /> */}
-//           <div className="">
-//             <p className="text-sm  border border-gray-200 rounded-md p-[5px] flex items-center "><span className="w-2 h-2 rounded-full bg-[#17B26A] inline-block mr-2"></span>{row.original.tokensRequired}</p>
-//             {/* <p className="text-xs  /90">{getMB(row.original)} MB</p> */}
-//           </div>
-//         </div>
-//       ),
-//   },
-//   {
-//     accessorKey: "RedeemReward",
-//     header: ({ column }) => {
-//       return (
-//         <Button
-//           variant="ghost"
-//           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-//           className="pl-0 font-normal text-sm"
-//         >
-//           Redeem reward
-//         </Button>
-//       );
-//     },
-//     cell: ({ row }) => (
-//       // <div className="text-[16px] border border-gray-200 text-gray-600 p-2 rounded-md font-semibold text w-[7vw] text-center">
-//       //   {/* {row.original.RedeemReward.toDateString().slice(0, 15)} */}
-//       //   Redeem
-//       // </div>
-//       <Button
-//       variant="ghost"
-//       // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-//       className="text-[16px] border border-gray-200 text-gray-600 p-2 rounded-md font-semibold text w-[7vw] text-center"
-//     >
-//       Redeem
-//     </Button>
-//     ),
-//   },
-  
-
-// ];
-
-
 export function DataTableDemo2() {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [isOpen, setIsOpen] = React.useState(false)
@@ -188,10 +121,8 @@ export function DataTableDemo2() {
         header: () => <div className="text-left font-semibold">Tokens Required</div>,
         cell: ({ row }) => (
             <div className="capitalize flex items-center gap-3">
-              {/* <Image src={filePdf} alt="file" width={30} height={30} /> */}
               <div className="">
                 <p className="text-sm  border border-gray-200 rounded-md p-[5px] flex items-center "><span className="w-2 h-2 rounded-full bg-[#17B26A] inline-block mr-2"></span>{row.original.tokensRequired}</p>
-                {/* <p className="text-xs  /90">{getMB(row.original)} MB</p> */}
               </div>
             </div>
           ),
@@ -209,14 +140,9 @@ export function DataTableDemo2() {
             </Button>
           );
         },
-        cell: ({ row }) => (
-          // <div className="text-[16px] border border-gray-200 text-gray-600 p-2 rounded-md font-semibold text w-[7vw] text-center">
-          //   {/* {row.original.RedeemReward.toDateString().slice(0, 15)} */}
-          //   Redeem
-          // </div>
+        cell: () => (
           <Button
           variant="ghost"
-          // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           onClick={()=>{setIsOpen(!isOpen)}} 
           className="text-[16px] border border-gray-200 text-gray-600 p-2 rounded-md font-semibold text w-[7vw] text-center"
         >
