@@ -22,17 +22,17 @@ const Sidebar = () => {
       {/* Sidebar */}
       <div className='flex flex-col w-full space-y-2 text-white'>
       
-      <Link href={'/'} className='w-[95%] mx-auto bg-[#774ad8] h-[50px] p-4 rounded-[8px] flex items-center'>
+      <Link href={'/dashboard'} className='w-[95%] mx-auto bg-[#774ad8] h-[50px] p-4 rounded-[8px] flex items-center'>
       <Image src={Home} alt='text' /> 
       <p className='ml-3 p-4'>Home</p>
       </Link>
 
-      <Link href={'/'} className='w-[95%] mx-auto  h-[50px] p-4 rounded-md hover:bg-[#774ad8] transition-colors flex items-center'>
+      <Link href={'/dashboard'} className='w-[95%] mx-auto  h-[50px] p-4 rounded-md hover:bg-[#774ad8] transition-colors flex items-center'>
       <Image src={Icon} alt='text' /> 
       <p className='ml-3'>Submit Waste</p>
       </Link>
 
-      <Link href={'/'} className='w-[95%] mx-auto  h-[50px] p-4 rounded-md hover:bg-[#774ad8] transition-colors flex items-center'>
+      <Link href={'/dashboard/redeemreward'} className='w-[95%] mx-auto  h-[50px] p-4 rounded-md hover:bg-[#774ad8] transition-colors flex items-center'>
       <Image src={Stack} alt='text' /> 
       <p className='ml-3'>Redeem Rewards</p>
       </Link>
