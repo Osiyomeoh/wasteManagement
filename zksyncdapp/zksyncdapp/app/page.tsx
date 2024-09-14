@@ -16,8 +16,8 @@ interface Transaction {
 
 // Directly import ABI JSON files as modules
 import wasteToken from './abis/WasteToken.json';
-import WasteCollectionRewards from './abis/WasteCollectionRewards.json';
-import MyPaymaster from './abis/MyPaymaster.json';
+// import WasteCollectionRewards from './abis/WasteCollectionRewards.json';
+// import MyPaymaster from './abis/MyPaymaster.json';
 
 // zkSync provider initialization
 const web3 = new Web3(process.env.SEPOLIA_RPC_URL || "https://rpc2.sepolia.org");
@@ -31,7 +31,7 @@ const wasteContractAddress = process.env.NEXT_PUBLIC_WASTE_CONTRACT_ADDRESS || "
 const paymasterAddress = process.env.NEXT_PUBLIC_PAYMASTER_ADDRESS || "0xYourPaymasterAddress";
 
 export default function WasteContractInteraction() {
-  const { address, isConnected } = useAccount();
+  const { isConnected } = useAccount();
   const { data: walletClient } = useWalletClient();
   const [balance, setBalance] = useState<number | null>(null);
   const [wasteSubmissionLoading, setWasteSubmissionLoading] = useState(false);
@@ -46,8 +46,8 @@ export default function WasteContractInteraction() {
 
   // Initialize WasteToken, Paymaster, and WasteContract instances using zksync plugin
   const wasteTokenContract = new web3.eth.Contract(wasteToken.abi, wasteTokenAddress);
-  const wasteContract = new web3.eth.Contract(WasteCollectionRewards.abi, wasteContractAddress);
-  const paymasterContract = new web3.eth.Contract(MyPaymaster.abi, paymasterAddress);
+  // const wasteContract = new web3.eth.Contract(WasteCollectionRewards.abi, wasteContractAddress);
+  // const paymasterContract = new web3.eth.Contract(MyPaymaster.abi, paymasterAddress);
 
   // Fetch Waste Token balance
   const fetchBalance = async () => {
@@ -82,7 +82,7 @@ const submitWaste = async (weightInKg: number) => {
 
   try {
     // Encode the transaction data for waste submission
-    const txData = wasteContract.methods.submitWaste(walletClient.account.address, weightInKg).encodeABI();
+    // const txData = wasteContract.methods.submitWaste(walletClient.account.address, weightInKg).encodeABI();
 
     // Call wallet.transfer using the Paymaster
     const tx = await wallet.transfer({
@@ -115,7 +115,7 @@ const redeemTokens = async (tokensToRedeem: number) => {
   setRedeemRewardLoading(true);
 
   try {
-    const txData = wasteContract.methods.redeemTokens(tokensToRedeem).encodeABI();
+    // const txData = wasteContract.methods.redeemTokens(tokensToRedeem).encodeABI();
 
     // Use Paymaster in a similar way to your transfer example
     const tx = await wallet.transfer({
@@ -142,13 +142,13 @@ const redeemTokens = async (tokensToRedeem: number) => {
 };
 
 // Set Trusted Center function
-const setTrustedCenter = async (center: string, isTrusted: boolean) => {
+const setTrustedCenter = async () => {
   if (!walletClient?.account?.address) return;
 
   setTrustedCenterLoading(true);
 
   try {
-    const txData = wasteContract.methods.setTrustedCenter(center, isTrusted).encodeABI();
+    // const txData = wasteContract.methods.setTrustedCenter(center, isTrusted).encodeABI();
 
     // Use Paymaster for trusted center update
     const tx = await wallet.transfer({
@@ -176,7 +176,7 @@ const setTrustedCenter = async (center: string, isTrusted: boolean) => {
   // Fetch data on mount and when wallet is connected
   useEffect(() => {
     if (isConnected) {
-      fetchBalance();
+     
     }
   }, [isConnected, walletClient]);
 
@@ -216,7 +216,7 @@ const setTrustedCenter = async (center: string, isTrusted: boolean) => {
               onChange={(e) => setCenterAddress(e.target.value)}
               className="mt-4 p-2 text-black"
             />
-            <button onClick={() => setTrustedCenter(centerAddress, true)} className={`px-4 py-2 bg-green-500 text-white rounded mt-4 ${trustedCenterLoading ? "opacity-50" : ""}`} disabled={trustedCenterLoading}>
+            <button onClick={() => setTrustedCenter()} className={`px-4 py-2 bg-green-500 text-white rounded mt-4 ${trustedCenterLoading ? "opacity-50" : ""}`} disabled={trustedCenterLoading}>
               {trustedCenterLoading ? "Updating..." : "Set Trusted Center"}
             </button>
           </div>

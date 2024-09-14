@@ -14,12 +14,12 @@ import {
 import { ArrowUpIcon } from "@radix-ui/react-icons";
 import { useWalletClient } from "wagmi";
 import Web3 from "web3";
-import { ZKsyncPlugin, Web3ZKsyncL2, types, getPaymasterParams, utils } from "web3-plugin-zksync";
+import { ZKsyncPlugin, Web3ZKsyncL2, types, getPaymasterParams } from "web3-plugin-zksync";
 
 // Directly import ABI JSON files as modules
 import wasteToken from "@/app/abis/WasteToken.json";
 import WasteCollectionRewards from "@/app/abis/WasteCollectionRewards.json";
-import MyPaymaster from "@/app/abis/MyPaymaster.json";
+// import MyPaymaster from "@/app/abis/MyPaymaster.json";
 
 // Addresses from environment variables
 const wasteTokenAddress = process.env.NEXT_PUBLIC_WASTE_TOKEN_ADDRESS || "0xYourWasteTokenAddress";
@@ -76,7 +76,7 @@ function Dashboard() {
   // Initialize WasteToken, Paymaster, and WasteContract instances using zksync plugin
   const wasteTokenContract = new web3.eth.Contract(wasteToken.abi, wasteTokenAddress);
   const wasteContract = new web3.eth.Contract(WasteCollectionRewards.abi, wasteContractAddress);
-  const paymasterContract = new web3.eth.Contract(MyPaymaster.abi, paymasterAddress);
+  // const paymasterContract = new web3.eth.Contract(MyPaymaster.abi, paymasterAddress);
 
   // Submit waste function (as before)
   const submitWaste = async () => {

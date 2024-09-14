@@ -15,7 +15,7 @@ import { XIcon } from 'lucide-react';
 
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen] = useState(true);
 
   return (
     <div className={`fixed flex justify-between flex-col h-screen ${isOpen ? 'w-3/12' : 'w-20'} bg-[#7F56D9] p-4`}>
