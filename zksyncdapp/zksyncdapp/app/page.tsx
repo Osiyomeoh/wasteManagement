@@ -44,13 +44,11 @@ export default function WasteContractInteraction() {
   const [transactionHistory, setTransactionHistory] = useState<Transaction[]>([]);
   const [trustedCenterLoading, setTrustedCenterLoading] = useState(false);
   const [centerAddress, setCenterAddress] = useState('');
+  const [ethBalance, setEthBalance] = useState<number | null>(null);
 
   const zksync = web3.ZKsync;
   const wallet = new zksync.Wallet("0xcd1e3ad2e67471d576b5fdca01b715a1f2149d41516e3524fc51589aa44cb9a7");
   const l2Provider = wallet.provider; // Ensure this is not undefined
-
-  // Initialize WasteToken contract instance using zksync plugin
-  //const wasteTokenContract = new web3.eth.Contract(wasteToken.abi, wasteTokenAddress);
 
   const fetchBalance = async () => {
     if (!walletClient?.account?.address || !l2Provider) {
@@ -72,9 +70,13 @@ export default function WasteContractInteraction() {
         eth: Number(balanceEth),
         customToken: Number(balanceCustomToken),
       });
+
+      // Update ETH balance state
+      setEthBalance(Number(balanceEth));
     } catch (error) {
       console.error("Error fetching balances:", error);
       setBalance({ eth: 0, customToken: 0 });
+      setEthBalance(null);
     }
   };
 
@@ -288,6 +290,7 @@ export default function WasteContractInteraction() {
               <>
                 <p>Your Waste Token Balance: {balance.customToken} WASTE</p>
                 {previousBalance !== null && <p>Previous Balance: {previousBalance} WASTE</p>}
+                <p>Your ETH Balance: {ethBalance} ETH</p>
               </>
             )}
           </div>
