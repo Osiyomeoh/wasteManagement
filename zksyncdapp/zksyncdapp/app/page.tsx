@@ -19,7 +19,7 @@ interface PaymasterBalance {
   eth: number;
 }
 
-import wasteToken from './abis/WasteToken.json';
+//import wasteToken from './abis/WasteToken.json';
 
 // zkSync provider initialization
 const web3 = new Web3(process.env.SEPOLIA_RPC_URL || "https://rpc2.sepolia.org");
@@ -50,7 +50,7 @@ export default function WasteContractInteraction() {
   const l2Provider = wallet.provider; // Ensure this is not undefined
 
   // Initialize WasteToken contract instance using zksync plugin
-  const wasteTokenContract = new web3.eth.Contract(wasteToken.abi, wasteTokenAddress);
+  //const wasteTokenContract = new web3.eth.Contract(wasteToken.abi, wasteTokenAddress);
 
   const fetchBalance = async () => {
     if (!walletClient?.account?.address || !l2Provider) {
