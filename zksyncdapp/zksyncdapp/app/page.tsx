@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useState, useEffect } from "react";
 import { useAccount, useWalletClient } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -11,6 +12,7 @@ interface Transaction {
   type: string;
   weight?: number;
   tokens?: number;
+  gasUsed?: number; // Add gasUsed to the Transaction type
   date: string;
 }
 
@@ -18,8 +20,6 @@ interface Transaction {
 interface PaymasterBalance {
   eth: number;
 }
-
-//import wasteToken from './abis/WasteToken.json';
 
 // zkSync provider initialization
 const web3 = new Web3(process.env.SEPOLIA_RPC_URL || "https://rpc2.sepolia.org");
@@ -119,15 +119,20 @@ export default function WasteContractInteraction() {
         }),
       });
 
-      const result = await tx.wait();
-      console.log(`Waste submitted successfully! Transaction Hash: ${result.transactionHash}`);
+      const receipt = await tx.wait();
+      console.log(`Waste submitted successfully! Transaction Hash: ${receipt.transactionHash}`);
+
+      // Get gas used from the receipt
+      const gasUsed = parseInt(receipt.gasUsed.toString(), 10);
+       console.log(`Gas Used: ${gasUsed}`);
+
 
       await fetchBalance();
       await fetchPaymasterBalance();
 
       setTransactionHistory((prev) => [
         ...prev,
-        { type: "Waste Submission", weight: weightInKg, date: new Date().toISOString() }
+        { type: "Waste Submission", weight: weightInKg, gasUsed, date: new Date().toISOString() }
       ]);
     } catch (error) {
       console.error("Error submitting waste:", error);
@@ -157,15 +162,20 @@ export default function WasteContractInteraction() {
         }),
       });
 
-      const result = await tx.wait();
-      console.log(`Tokens redeemed successfully! Transaction Hash: ${result.transactionHash}`);
+      const receipt = await tx.wait();
+      console.log(`Tokens redeemed successfully! Transaction Hash: ${receipt.transactionHash}`);
+
+      // Get gas used from the receipt
+      const gasUsed = parseInt(receipt.gasUsed.toString(), 10);
+    console.log(`Gas Used: ${gasUsed}`);
+
 
       await fetchBalance();
       await fetchPaymasterBalance();
 
       setTransactionHistory((prev) => [
         ...prev,
-        { type: "Tokens Redeemed", tokens: tokensToRedeem, date: new Date().toISOString() }
+        { type: "Tokens Redeemed", tokens: tokensToRedeem, gasUsed, date: new Date().toISOString() }
       ]);
     } catch (error) {
       console.error("Error redeeming tokens:", error);
@@ -192,15 +202,20 @@ export default function WasteContractInteraction() {
         }),
       });
 
-      const result = await tx.wait();
-      console.log(`Tokens minted successfully! Transaction Hash: ${result.transactionHash}`);
-      
+      const receipt = await tx.wait();
+      console.log(`Tokens minted successfully! Transaction Hash: ${receipt.transactionHash}`);
+
+      // Get gas used from the receipt
+      const gasUsed = parseInt(receipt.gasUsed.toString(), 10);
+      console.log(`Gas Used: ${gasUsed}`);
+  
+
       await fetchBalance();
       await fetchPaymasterBalance();
 
       setTransactionHistory((prev) => [
         ...prev,
-        { type: "Tokens Minted", tokens: amount, date: new Date().toISOString() }
+        { type: "Tokens Minted", tokens: amount, gasUsed, date: new Date().toISOString() }
       ]);
     } catch (error) {
       console.error("Error minting tokens:", error);
@@ -227,8 +242,13 @@ export default function WasteContractInteraction() {
         }),
       });
 
-      const result = await tx.wait();
-      console.log(`Trusted center set successfully! Transaction Hash: ${result.transactionHash}`);
+      const receipt = await tx.wait();
+      console.log(`Trusted center set successfully! Transaction Hash: ${receipt.transactionHash}`);
+
+      // Get gas used from the receipt
+      const gasUsed = parseInt(receipt.gasUsed.toString(), 10);
+      console.log(`Gas Used: ${gasUsed}`);
+  
     } catch (error) {
       console.error("Error setting trusted center:", error);
     } finally {
@@ -315,7 +335,7 @@ export default function WasteContractInteraction() {
               <ul className="list-disc mt-4">
                 {transactionHistory.map((txn, index) => (
                   <li key={index} className="mb-2">
-                    {txn.type}: {txn.weight ? `${txn.weight} kg` : `${txn.tokens} Tokens`} - {new Date(txn.date).toLocaleString()}
+                    {txn.type}: {txn.weight ? `${txn.weight} kg` : `${txn.tokens} Tokens`} - Gas Used: {txn.gasUsed} - {new Date(txn.date).toLocaleString()}
                   </li>
                 ))}
               </ul>
